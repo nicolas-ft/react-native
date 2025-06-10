@@ -50,3 +50,30 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+
+https://ionic.io/ionicons
+
+https://reactnative.dev/docs/intro-react
+
+https://r3f.docs.pmnd.rs/getting-started/installation
+
+https://medium.com/@fa21-bse-022/react-three-fiber-with-react-native-a-beginners-guide-85e361159ef7
+
+Test native code :
+create a development build (EAS)
+https://docs.expo.dev/develop/development-builds/create-a-build/
+https://www.youtube.com/watch?v=uQCE9zl3dXU
+
+```bash
+  sudo npm i -g eas-cli
+  eas login
+	eas init
+	Y
+	eas build
+```
+
+Need a paid Apple Developer account ... !!
+(99$ !! oh no!)
+
+
