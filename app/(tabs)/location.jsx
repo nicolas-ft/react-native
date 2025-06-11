@@ -2,9 +2,6 @@ import { ScrollView, StyleSheet, Text, View } from "react-native"
 import React, { useState, useEffect } from 'react'
 import * as ExpoLocation from 'expo-location';
 
-// const API_KEY = 'AIzaSyCNOiIDKv4uykkA3hmbTHUDAc6_K7cLTgs'
-// const URL = 'https://maps.google.com/maps/api/geocode/json?latlng='
-
 export default function Location() {
 	const [address, setAddress] = useState('loading...')
 	const [longitude, setLongitude] = useState();
