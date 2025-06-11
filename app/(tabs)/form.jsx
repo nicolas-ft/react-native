@@ -1,17 +1,15 @@
-import React, {useState} from 'react';
-import { Text, View, StyleSheet, ScrollView, TextInput } from "react-native";
+import { useState } from 'react';
+import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
 const styles = StyleSheet.create({
 	contentContainer: {
-		flexGrow: 1, // Allows content to grow and fill the ScrollView's available space
-		justifyContent: 'center', // Centers content vertically
-		alignItems: 'center', // Centers content horizontally
-		// backgroundColor: '#25292e',
+		flexGrow: 1, 
+		justifyContent: 'center', 
+		alignItems: 'center', 
 	},
 	centeredView: {
 		padding: 20,
 		borderRadius: 10,
-		
 	},
 	text: {
 		fontSize: 20,
@@ -29,7 +27,7 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default function About() {
+export default function Form() {
 
 	const [text, setText] = useState('');
 

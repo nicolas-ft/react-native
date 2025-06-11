@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { captureRef } from 'react-native-view-shot';
 
@@ -97,46 +97,57 @@ export default function Photos() {
 	};
 
 
-
 	return (
-		<GestureHandlerRootView style={styles.container}>
-			<View style={styles.imageContainer}>
-				<View ref={imageRef} collapsable={false}>
-			 		<ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage} />
-					{pickedEmoji && <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />}
-				</View>
-			</View>
-			{showAppOptions ? (
-				<View style={styles.optionsContainer}>
-					<View style={styles.optionsRow}>
-						<IconButton icon="refresh" label="Reset" onPress={onReset} />
-						<CircleButton onPress={onAddSticker} />
-						<IconButton icon="save-alt" label="Save" onPress={onSaveImageAsync} />
+		<ScrollView contentContainerStyle={styles.contentContainer}>
+			<GestureHandlerRootView style={styles.imageContainer}>
+				<View style={styles.imageContainer}>
+					<View ref={imageRef} collapsable={false}>
+						<ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage} />
+						{pickedEmoji && <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />}
 					</View>
 				</View>
-			) : (
-				<View style={styles.footerContainer}>
-					<Button theme="primary" label="Choose a photo" onPress={pickImageAsync} />
-					<Button label="Use this photo" onPress={() => setShowAppOptions(true)} />
-				</View>
-			)}
+				{showAppOptions ? (
+					<View style={styles.optionsContainer}>
+						<View style={styles.optionsRow}>
+							<IconButton icon="refresh" label="Reset" onPress={onReset} />
+							<CircleButton onPress={onAddSticker} />
+							<IconButton icon="save-alt" label="Save" onPress={onSaveImageAsync} />
+						</View>
+					</View>
+				) : (
+					<View style={styles.footerContainer}>
+						<Button theme="primary" label="Choose a photo" onPress={pickImageAsync} />
+						<Button label="Use this photo" onPress={() => setShowAppOptions(true)} />
+					</View>
+				)}
 
 
-			<EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
-				<EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
-			</EmojiPicker>
-		</GestureHandlerRootView>
+				<EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
+					<EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
+				</EmojiPicker>
+			</GestureHandlerRootView>
+		</ScrollView>
 	);
 }
 
 const styles = StyleSheet.create({
+	contentContainer: {
+		flexGrow: 1, // Allows content to grow and fill the ScrollView's available space
+		justifyContent: 'center', // Centers content vertically
+		alignItems: 'center', // Centers content horizontally
+		// backgroundColor: '#25292e',
+	},
 	container: {
 		flex: 1,
-		backgroundColor: '#25292e',
-		alignItems: 'center',
+		justifyContent: 'center', // Centers content vertically
+		alignItems: 'center', // Centers content horizontally
 	},
 	imageContainer: {
+		marginTop: 10,
+		marginBottom: 20,
 		flex: 1,
+		justifyContent: 'center', // Centers content vertically
+		alignItems: 'center', // Centers content horizontally
 	},
 	footerContainer: {
 		flex: 1 / 3,

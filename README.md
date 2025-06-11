@@ -60,6 +60,9 @@ https://r3f.docs.pmnd.rs/getting-started/installation
 
 https://medium.com/@fa21-bse-022/react-three-fiber-with-react-native-a-beginners-guide-85e361159ef7
 
+https://icons.expo.fyi/Index
+
+
 Test native code :
 create a development build (EAS)
 https://docs.expo.dev/develop/development-builds/create-a-build/

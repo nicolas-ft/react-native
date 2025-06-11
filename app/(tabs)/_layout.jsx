@@ -8,7 +8,9 @@ export default function TabLayout() {
 		<Tabs
 			screenOptions={{
 				tabBarActiveTintColor: '#25292e',
-
+				sceneStyle: {
+          backgroundColor: '#25292e',
+        },
 				// headerShadowVisible: false,
 				headerTintColor: '#25292e',
 				tabBarStyle: {
@@ -19,7 +21,7 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="index"
 				options={{
-					title: 'My app',
+					title: 'Home',
 					tabBarIcon: ({ color, focused }) => (
 						<Ionicons name={focused ? 'home-sharp' : 'home-outline'} color={color} size={24} />
 					),
@@ -27,10 +29,10 @@ export default function TabLayout() {
 			/>
 			
 			<Tabs.Screen
-				name="about"
+				name="map"
 				
 				options={{
-					title: 'About',
+					title: 'Map',
 					// headerTitle: 'Back',
 					headerLeft: () => (
 						<Pressable onPress={() => router.back()}>
@@ -38,7 +40,40 @@ export default function TabLayout() {
 						</Pressable>
 					),
 					tabBarIcon: ({ color, focused }) => (
-						<Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={24}/>
+						<Ionicons name={focused ? 'map' : 'map-outline'} color={color} size={24}/>
+					),
+				}}
+			/>
+			
+			<Tabs.Screen
+				name="location"
+				
+				options={{
+					title: 'Location',
+					// headerTitle: 'Back',
+					headerLeft: () => (
+						<Pressable onPress={() => router.back()}>
+							<AntDesign name="left" size={24} color="#25292e" />
+						</Pressable>
+					),
+					tabBarIcon: ({ color, focused }) => (
+						<Ionicons name={focused ? 'location' : 'location-outline'} color={color} size={24}/>
+					),
+				}}
+			/>
+			
+			<Tabs.Screen
+				name="three"
+				options={{
+					title: 'Three',
+					// headerTitle: 'Back',
+					headerLeft: () => (
+						<Pressable onPress={() => router.back()}>
+							<Ionicons name="chevron-back-outline" color="#25292e" size={24}/>
+						</Pressable>
+					),
+					tabBarIcon: ({ color, focused }) => (
+						<Ionicons name={focused ? 'cube' : 'cube-outline'} color={color} size={24}/>
 					),
 				}}
 			/>
@@ -46,18 +81,37 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="photos"
 				options={{
-					title: 'Photos',
+					title: 'Photo',
 					//headerTitle: 'Back',
 					headerLeft: () => (
 						<Pressable onPress={() => router.back()}>
-							<AntDesign name="left" size={24} color="#25292e" />
+							<Ionicons name="chevron-back-outline" color="#25292e" size={24}/>
 						</Pressable>
 					),
 					tabBarIcon: ({ color, focused }) => (
-						<Ionicons name={focused ? 'camera' : 'camera-outline'} color={color} size={24}/>
+						<Ionicons name={focused ? 'image' : 'image-outline'} color={color} size={24}/>
 					),
 				}}
 			/>
+
+			<Tabs.Screen
+				name="form"
+				options={{
+					title: 'Forms',
+					//headerTitle: 'Back',
+					headerLeft: () => (
+						<Pressable onPress={() => router.back()}>
+							<Ionicons name="chevron-back-outline" color="#25292e" size={24}/>
+						</Pressable>
+					),
+					tabBarIcon: ({ color, focused }) => (
+						<Ionicons name={focused ? 'checkbox' : 'checkbox-outline'} color={color} size={24}/>
+					),
+				}}
+			/>
+
+
+
 		</Tabs>
 	);
 }
