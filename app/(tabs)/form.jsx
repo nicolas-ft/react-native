@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
+const color = '#25292e'
+
+
 const styles = StyleSheet.create({
 	contentContainer: {
 		flexGrow: 1, 
@@ -15,15 +18,17 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		fontWeight: 'bold',
 		textAlign: 'center',
-		color: '#25292e',
+		color: color,
 	},
 	input: {
+		minWidth: 200,
 		height: 40,
 		padding: 5,
 		borderRadius: 6,
 		backgroundColor: '#fff',
 		borderWidth: 1,
-		borderColor: '#25292e',
+		borderColor: color,
+		color: color,
 	}
 });
 
@@ -33,11 +38,13 @@ export default function Form() {
 
 	return (
 
-		<ScrollView contentContainerStyle={styles.contentContainer}>
+		<ScrollView bounces={false} contentContainerStyle={styles.contentContainer}>
 			<View style={styles.centeredView}>
 				<Text style={styles.text}>{text}</Text>
 
-				<TextInput style={styles.input}
+				<TextInput 
+					style={styles.input}
+					placeholderTextColor={color}
 					placeholder="Type here"
 					onChangeText={newText => setText(newText)}
 					defaultValue={text}

@@ -98,7 +98,7 @@ export default function Photos() {
 
 
 	return (
-		<ScrollView contentContainerStyle={styles.contentContainer}>
+		<ScrollView contentContainerStyle={styles.contentContainer} bounces={false}>
 			<GestureHandlerRootView style={styles.imageContainer}>
 				<View style={styles.imageContainer}>
 					<View ref={imageRef} collapsable={false}>
