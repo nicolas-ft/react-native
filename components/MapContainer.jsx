@@ -1,63 +1,142 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { SafeAreaView, View, StyleSheet, Dimensions } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import * as ExpoLocation from 'expo-location';
+import CustomMarker from '@/components/CustomMarker';
 
-const lat = '35.69628586699673'
-const lon = '139.60121795361565'
+
+const lat = '35.69642046706202'
+const lon = '139.6007016127125'
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.001;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
+function getNewPosition(lat, lon){
+
+const LATITUDE_DELTA = 0.001;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+	return {
+    latitude: lat, 
+    longitude: lon,
+    latitudeDelta: LATITUDE_DELTA,
+    longitudeDelta: LONGITUDE_DELTA,
+	}
+}
+
+  const initialRegion = {
+    latitude: lat, 
+    longitude: lon,
+    latitudeDelta: LATITUDE_DELTA,
+    longitudeDelta: LONGITUDE_DELTA,
+  };
+
+
 export default function MapContainer() {
-	const [markers, setMarkers] = useState([
-		{
-			coordinate: {
-				latitude: lat,
-				longitude: lon,
-			},
-			title: "test",
-			description: "test",
-			id: 1
-		},
-	]);
+
+	const [markers, setMarkers] = useState([]);
+	const mapRef = useRef(null);
+
+	// const [userLocation, setUserLocation] = useState(null);
 
 	const handleMapPress = (event) => {
+		event.stopPropagation();
 		const newCoordinate = event.nativeEvent.coordinate;
-		console.log(newCoordinate)
-		setMarkers((prevMarkers) => [...prevMarkers, { coordinate: newCoordinate }]);
+		setMarkers([...markers, newCoordinate])
 	};
+
+
+  // const handleMapReady = async () => {
+
+	// 	// let location = await ExpoLocation.getCurrentPositionAsync({accuracy : ExpoLocation.Accuracy.Highest});
+
+
+  //   if (mapRef.current && userLocation) {
+  //     mapRef.current.animateToRegion(userLocation, 1000); // Animate over 1 second
+  //   }
+  // };
+
+
+	const getCurrentLocation = async () => {
+		const { status } = await ExpoLocation.requestForegroundPermissionsAsync();
+		if (status !== 'granted') {
+			console.log('Permission to access location was denied');
+			return ;
+		}
+		let location = await ExpoLocation.getCurrentPositionAsync({accuracy : ExpoLocation.Accuracy.Highest});
+
+		const userLocation = {
+			latitude: location.coords.latitude,
+			longitude: location.coords.longitude,
+			latitudeDelta: LATITUDE_DELTA,
+			longitudeDelta: LONGITUDE_DELTA,
+		};
+
+    mapRef.current.animateToRegion(userLocation, 1000); // Animate over 1 second
+
+
+
+		// mapRef.current.animateToRegion({
+		// 	latitude: location.coords.latitude,
+		// 	longitude: location.coords.longitude,
+		// 	latitudeDelta: LATITUDE_DELTA,
+		// 	longitudeDelta: LONGITUDE_DELTA,
+		// }, 1000);
+	}
+
+
+
+
+	useEffect( () => {
+		getCurrentLocation()
+	}, [])
+
 
 
 	return (
 		<View style={styles.container}>
 			<MapView 
+
+				showsUserLocation={true}
+				folowUserLocation
+				ref={mapRef}
 				style={styles.map} 
-				initialRegion={{
-					latitude: lat,
-					longitude: lon,
-					latitudeDelta: LATITUDE_DELTA,
-					longitudeDelta: LONGITUDE_DELTA,
-				}}
+				mapType={'hybrid'}
+				zoomTapEnabled={false}
+				scrollEnabled={true}
+				showsPointsOfInterest={false}
+      	// initialRegion={userLocation}
+				// initialRegion={{
+				// 	latitude: lat,
+				// 	longitude: lon,
+				// 	latitudeDelta: LATITUDE_DELTA,
+				// 	longitudeDelta: LONGITUDE_DELTA,
+				// }}
+				onMapReady={getCurrentLocation}
+				// onPress={(e) => setMarkers([...markers, e.nativeEvent.coordinate])}
 				onPress={handleMapPress}
-			/>
-			<Marker 
-				coordinate={{
-					latitude: lat,
-					longitude: lon,
-				}}
-			/>
-			{markers.map((marker, index) => (
-				<Marker 
-					key={index} 
-					coordinate={marker.coordinate} 
-					title={`Marker ${index + 1}`}
-				/>
-			))}
+			>
+				{markers.map((marker, index) => (
+					<Marker 
+						key={`marker_${index}`}
+						coordinate={marker}
+						// title={`Marker ${index + 1}`}
+						// description={`Lat: ${marker.latitude}, Lng: ${marker.longitude}`}
+						onPress={(e) => {
+							e.stopPropagation()
+						}}
+					/>
+				))}
+
+
+			</MapView>
 		</View>
 	);
 }
+
+
+
 
 const styles = StyleSheet.create({
 	container: {
